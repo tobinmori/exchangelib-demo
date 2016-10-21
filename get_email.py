@@ -6,7 +6,7 @@ credentials = Credentials(username='', password='')
 account = Account(primary_smtp_address='', credentials=credentials,
                   autodiscover=True, access_type=DELEGATE)
 
-WHITELIST_FOLDERS = ['Root (1-Contact Groups)','Root (4-PBSd)',]
+WHITELIST_FOLDERS = ['','',]
 
 def print_account_folders():
     """
