@@ -6,7 +6,7 @@ credentials = Credentials(username='', password='')
 account = Account(primary_smtp_address='', credentials=credentials,
                   autodiscover=True, access_type=DELEGATE)
 
-WHITELIST_FOLDERS = ['','']
+WHITELIST_FOLDERS = ['Root (1-Contact Groups)','Root (4-PBSd)',]
 
 def print_account_folders():
     """
@@ -65,6 +65,16 @@ def extract_folder(folder):
         emails.append(item)
     return emails
 
+def get_whitelisted_folders():
+    """
+    Returns a list of whitelisted folders as objects
+    """
+    whitelisted = []
+    for folder in get_all_root_folders():
+        if str(folder) in WHITELIST_FOLDERS:
+            whitelisted.append(folder)
+    return whitelisted
+
 def get_emails():
     """
     Returns a list of emails, in the WHITELISTED list.
@@ -77,6 +87,21 @@ def get_emails():
         else: continue
     return items
 
-print(len(get_emails()))
-print(get_emails()[80])
+def get_email_by_subject(folder, subject):
+    """
+    Return Queryset that matches subject
+    """
+    return folder.filter(subject__contains=subject)
 
+def search_by_subject(subject):
+    """
+    Return a list of emails, that match the subject
+    :param subject:
+    :return:
+    """
+    emails = []
+    for folder in get_whitelisted_folders():
+        if folder is None: continue
+        for email in get_email_by_subject(folder, subject):
+            emails.append(email)
+    return emails
