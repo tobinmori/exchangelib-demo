@@ -6,6 +6,7 @@ credentials = Credentials(username='', password='')
 account = Account(primary_smtp_address='', credentials=credentials,
                   autodiscover=True, access_type=DELEGATE)
 
+# Add whitelisted email folders here
 WHITELIST_FOLDERS = ['','',]
 
 def print_account_folders():
